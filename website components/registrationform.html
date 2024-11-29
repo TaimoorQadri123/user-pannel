@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="assets/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        #conte {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .form-control.invalid {
+            border-color: red;
+        }
+
+        .form-control.valid {
+            border-color: green;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="conte">
+        <h1>Registration Form</h1>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name">
+            <span class="error-message"></span>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email">
+            <span class="error-message"></span>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password">
+            <span class="error-message"></span>
+        </div>
+        <button type="submit" class="btn" id="register">Submit</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("name").addEventListener("keyup", function() {
+                let uname = this.value;
+                let nameRegex = /^[A-Za-z\s]{3,14}$/;
+                if (!nameRegex.test(uname)) {
+                    this.classList.add("invalid");
+                    this.classList.remove("valid");
+                    this.nextElementSibling.textContent = "At least 3 characters are required or maximum 14";
+                } else {
+                    this.classList.add("valid");
+                    this.classList.remove("invalid");
+                    this.nextElementSibling.textContent = "Valid data";
+                    this.nextElementSibling.classList.remove("error-message");
+                    this.nextElementSibling.classList.add("success-message");
+                }
+            });
+
+            document.getElementById("email").addEventListener("keyup", function() {
+                let uemail = this.value;
+                let emailRegex = /^[\w]{1,}[@][a-z]{5,9}[.][a-z]{3}$/;
+                if (!emailRegex.test(uemail)) {
+                    this.classList.add("invalid");
+                    this.classList.remove("valid");
+                    this.nextElementSibling.textContent = "Please follow the valid pattern for email e.g a1@gmail.com";
+                } else {
+                    this.classList.add("valid");
+                    this.classList.remove("invalid");
+                    this.nextElementSibling.textContent = "Valid data";
+                    this.nextElementSibling.classList.remove("error-message");
+                    this.nextElementSibling.classList.add("success-message");
+                }
+            });
+
+            document.getElementById("password").addEventListener("keyup", function() {
+                let pass = this.value;
+                let passRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%&])[A-Za-z\d!@#$%&]{8,14}$/;
+                if (!passRegex.test(pass)) {
+                    this.classList.add("invalid");
+                    this.classList.remove("valid");
+                    this.nextElementSibling.textContent = "Please follow the valid pattern for Password. At least 8 characters are required with one uppercase, one lowercase, one digit, and one special character like Aa1@";
+                } else {
+                    this.classList.add("valid");
+                    this.classList.remove("invalid");
+                    this.nextElementSibling.textContent = "Valid data";
+                    this.nextElementSibling.classList.remove("error-message");
+                    this.nextElementSibling.classList.add("success-message");
+                }
+            });
+
+            document.getElementById("register").addEventListener("click", function(event) {
+                event.preventDefault();
+
+                let uname = document.getElementById("name").value;
+                let uemail = document.getElementById("email").value;
+                let pass = document.getElementById("password").value;
+
+                let nameRegex = /^[A-Za-z\s]{3,14}$/;
+                let emailRegex = /^[\w]{1,}[@][a-z]{5,9}[.][a-z]{3}$/;
+                let passRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%&])[A-Za-z\d!@#$%&]{8,14}$/;
+
+                if (uname == "" || uemail == "" || pass == "") {
+                    alert("All fields are required.");
+                } else if (!nameRegex.test(uname) || !emailRegex.test(uemail) || !passRegex.test(pass)) {
+                    alert("Valid data is required in all fields.");
+                } else {
+                    let obj = {
+                        name: uname,
+                        email: uemail,
+                        password: pass
+                    };
+                    localStorage.setItem("userDetail", JSON.stringify(obj));
+                    alert("Account registered successfully");
+                    // Uncomment the line below to redirect to a new page after registration
+                    // location.assign("register.html");
+                }
+            });
+        });
+    </script>
+<script src="assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
